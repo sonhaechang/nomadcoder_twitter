@@ -1,9 +1,12 @@
 
+import { authService } from "fbase";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from 'react';
 
 function Auth() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [newAccount, setNewAccount] = useState(true);
 
     // // 이런식으로도 사용가능
     // const [form, setForm] = useState({email: '', password: ''});
@@ -20,6 +23,23 @@ function Auth() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        try {
+            let data;
+
+            if (newAccount) {    
+                data = await createUserWithEmailAndPassword(
+                    authService, email, password
+                );
+            } else {
+                data = await signInWithEmailAndPassword(
+                    authService, email, password
+                );
+            }
+            console.log(data);
+        } catch(err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -43,7 +63,7 @@ function Auth() {
                 />
                 <input 
                     type="submit" 
-                    value='Login' 
+                    value={newAccount ? 'Create Account' : 'Login'} 
                 />
             </form>
             <div>
