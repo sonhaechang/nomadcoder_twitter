@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { dbService } from 'fbase';
+import { dbService, storageSevice } from 'fbase';
 import { doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { deleteObject, ref } from 'firebase/storage';
 
 function Nweet({ nweetObj, isOwner }) {
     const [editing, setEdting] = useState(false);
@@ -13,6 +14,7 @@ function Nweet({ nweetObj, isOwner }) {
         
         if (ok) {
             await deleteDoc(NweetTextRef);
+            await deleteObject(ref(storageSevice, nweetObj.attachmentUrl));
         }
     };
 
