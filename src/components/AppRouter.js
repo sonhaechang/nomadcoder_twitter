@@ -7,7 +7,7 @@ import Navigation from 'components/Navigation';
 function AppRouter({ isLoggedIn, userObj }) {
     return (
         <HashRouter>
-            {isLoggedIn && <Navigation />}
+            {isLoggedIn && <Navigation userObj={userObj} />}
 
             <Routes>
                 {
