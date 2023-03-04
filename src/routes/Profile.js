@@ -4,7 +4,7 @@ import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function Profile({ userObj }) {
+function Profile({ refreshUser, userObj }) {
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName)
 
     const navigate = useNavigate();
@@ -23,8 +23,9 @@ function Profile({ userObj }) {
         e.preventDefault();
 
         if ( userObj.displayName !== newDisplayName ) {
-            await updateProfile(userObj, {displayName: newDisplayName})
+            await updateProfile(authService.currentUser, {displayName: newDisplayName});
         }
+        refreshUser();
     }
 
     const getMyNweets = async () => {

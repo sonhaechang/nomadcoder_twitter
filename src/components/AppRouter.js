@@ -4,7 +4,7 @@ import Auth from 'routes/Auth';
 import Home from 'routes/Home';
 import Navigation from 'components/Navigation';
 
-function AppRouter({ isLoggedIn, userObj }) {
+function AppRouter({ refreshUser, isLoggedIn, userObj }) {
     return (
         <HashRouter>
             {isLoggedIn && <Navigation userObj={userObj} />}
@@ -15,11 +15,18 @@ function AppRouter({ isLoggedIn, userObj }) {
                     <>
                         <Route 
                             path='/' 
-                            element={<Home userObj={userObj} />} 
+                            element={
+                                <Home userObj={userObj} />
+                            } 
                         />
                         <Route 
                             path='/profile' 
-                            element={<Profile userObj={userObj} />} 
+                            element={
+                                <Profile 
+                                    userObj={userObj} 
+                                    refreshUser={refreshUser}
+                                />
+                            } 
                         />
                     </> 
                     : 
